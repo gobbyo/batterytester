@@ -26,10 +26,12 @@ def main():
             percentageOfBattery = batteryVoltage/batterySmallVolt
             LEDdisplay = int(percentageOfBattery*LEDMeterRange)
 
+            #Calculate 9v reading when 1.5v pin is not being used
             if LEDdisplay < 1:
                 batteryVoltage = voltagePerDegree * batteryHighVoltage.read_u16()
                 percentageOfBattery = batteryVoltage/batteryHighVolt
-
+                LEDdisplay = int(percentageOfBattery*LEDMeterRange)
+                
             if LEDdisplay > LEDMeterRange:
                 LEDdisplay = LEDMeterRange
 
