@@ -5,8 +5,8 @@ ADCMaxVoltPin = 27 #GP27
 PicoVoltage = 3.3
 ADC16BitRange = 65536
 LEDMeterRange = 10
-batterySmallVolt = 1.5 #1.5V
-batteryHighVolt = 3.0 #9V
+batterySmallVolt = 1.5 #1.5v
+batteryHighVolt = 3.0 #9v
 
 def main():
 
@@ -31,7 +31,7 @@ def main():
                 batteryVoltage = voltagePerDegree * batteryHighVoltage.read_u16()
                 percentageOfBattery = batteryVoltage/batteryHighVolt
                 LEDdisplay = int(percentageOfBattery*LEDMeterRange)
-                
+
             if LEDdisplay > LEDMeterRange:
                 LEDdisplay = LEDMeterRange
 
