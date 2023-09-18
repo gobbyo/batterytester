@@ -1,5 +1,6 @@
 from machine import Pin, ADC
 import time
+import logs
 
 ADCLowVoltPin = 26 #GP26
 ADCMaxVoltPin = 27 #GP27
@@ -12,6 +13,7 @@ batteryHighVolt = 3.0 #9v
 def main():
 
     LEDSegDisplay = []
+    log = logs.logger("batterycheck.log",2048)
 
     try:
         batteryLowVoltage = ADC(ADCLowVoltPin)
@@ -30,12 +32,13 @@ def main():
             batteryVoltage = voltagePerDegree * batteryLowVoltage.read_u16()
             percentageOfBattery = batteryVoltage/batterySmallVolt
             LEDdisplay = int(percentageOfBattery*LEDMeterRange)
-            #print("percentageOfBattery: ", percentageOfBattery, " LEDdisplay: ", LEDdisplay)
+            log.write("low check percentageOfBattery: {0} LEDdisplay: {1}".format(percentageOfBattery, LEDdisplay))
             #Calculate 9v reading when 1.5v pin is not being used
             if LEDdisplay < 1:
                 batteryVoltage = voltagePerDegree * batteryHighVoltage.read_u16()
                 percentageOfBattery = batteryVoltage/batteryHighVolt
                 LEDdisplay = int(percentageOfBattery*LEDMeterRange)
+                log.write("high check percentageOfBattery: {0} LEDdisplay: {1}".format(percentageOfBattery, LEDdisplay))
 
             if LEDdisplay > LEDMeterRange:
                 LEDdisplay = LEDMeterRange
